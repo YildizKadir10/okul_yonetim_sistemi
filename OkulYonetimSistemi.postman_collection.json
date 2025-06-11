@@ -1,0 +1,331 @@
+{
+	"info": {
+		"_postman_id": "1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p",
+		"name": "Okul Yönetim Sistemi",
+		"description": "Okul Yönetim Sistemi API Koleksiyonu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Öğrenciler",
+			"item": [
+				{
+					"name": "Tüm Öğrencileri Getir",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students"]
+						}
+					}
+				},
+				{
+					"name": "Öğrenci Getir",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students", "1"]
+						}
+					}
+				},
+				{
+					"name": "Öğrenci Oluştur",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Ahmet\",\n    \"lastName\": \"Yılmaz\",\n    \"studentNumber\": \"2024001\",\n    \"email\": \"ahmet.yilmaz@example.com\",\n    \"phoneNumber\": \"5551234567\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students"]
+						}
+					}
+				},
+				{
+					"name": "Öğrenci Güncelle",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Ahmet\",\n    \"lastName\": \"Yılmaz\",\n    \"studentNumber\": \"2024001\",\n    \"email\": \"ahmet.yilmaz@example.com\",\n    \"phoneNumber\": \"5551234567\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students", "1"]
+						}
+					}
+				},
+				{
+					"name": "Öğrenci Sil",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students", "1"]
+						}
+					}
+				},
+				{
+					"name": "Sınıfa Göre Öğrencileri Getir",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students/class/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students", "class", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Sınıflar",
+			"item": [
+				{
+					"name": "Tüm Sınıfları Getir",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/classes",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "classes"]
+						}
+					}
+				},
+				{
+					"name": "Sınıf Getir",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/classes/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "classes", "1"]
+						}
+					}
+				},
+				{
+					"name": "Sınıf Oluştur",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"9-A\",\n    \"code\": \"9A\",\n    \"description\": \"9. Sınıf A Şubesi\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/classes",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "classes"]
+						}
+					}
+				},
+				{
+					"name": "Sınıf Güncelle",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"9-A\",\n    \"code\": \"9A\",\n    \"description\": \"9. Sınıf A Şubesi\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/classes/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "classes", "1"]
+						}
+					}
+				},
+				{
+					"name": "Sınıf Sil",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/classes/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "classes", "1"]
+						}
+					}
+				},
+				{
+					"name": "Öğretmene Göre Sınıfları Getir",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/classes/teacher/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "classes", "teacher", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Öğretmenler",
+			"item": [
+				{
+					"name": "Tüm Öğretmenleri Getir",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/teachers",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "teachers"]
+						}
+					}
+				},
+				{
+					"name": "Öğretmen Getir",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/teachers/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "teachers", "1"]
+						}
+					}
+				},
+				{
+					"name": "Öğretmen Oluştur",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Mehmet\",\n    \"lastName\": \"Demir\",\n    \"email\": \"mehmet.demir@example.com\",\n    \"phoneNumber\": \"5559876543\",\n    \"subject\": \"Matematik\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/teachers",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "teachers"]
+						}
+					}
+				},
+				{
+					"name": "Öğretmen Güncelle",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Mehmet\",\n    \"lastName\": \"Demir\",\n    \"email\": \"mehmet.demir@example.com\",\n    \"phoneNumber\": \"5559876543\",\n    \"subject\": \"Matematik\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/teachers/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "teachers", "1"]
+						}
+					}
+				},
+				{
+					"name": "Öğretmen Sil",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/teachers/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "teachers", "1"]
+						}
+					}
+				},
+				{
+					"name": "Branşa Göre Öğretmenleri Getir",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/teachers/subject/Matematik",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "teachers", "subject", "Matematik"]
+						}
+					}
+				}
+			]
+		}
+	]
+} 
