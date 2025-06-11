@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Öğretmenler - Okul Yönetim Sistemi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Okul Yönetim Sistemi</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/students">Öğrenciler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/teachers">Öğretmenler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/classes">Sınıflar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Öğretmen Listesi</h2>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addTeacherModal">Yeni Öğretmen Ekle</button>
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Öğretmen No</th>
+                    <th>Ad Soyad</th>
+                    <th>Branş</th>
+                    <th>E-posta</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="teacher : ${teachers}">
+                    <td th:text="${teacher.teacherNumber}"></td>
+                    <td th:text="${teacher.name}"></td>
+                    <td th:text="${teacher.subject}"></td>
+                    <td th:text="${teacher.email}"></td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" th:onclick="'editTeacher(' + ${teacher.id} + ')'">Düzenle</button>
+                        <button class="btn btn-sm btn-danger" th:onclick="'deleteTeacher(' + ${teacher.id} + ')'">Sil</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Öğretmen Ekleme Modal -->
+    <div class="modal fade" id="addTeacherModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Yeni Öğretmen Ekle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="teacherForm">
+                        <div class="mb-3">
+                            <label class="form-label">Ad Soyad</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Branş</label>
+                            <select class="form-select" id="subject" required>
+                                <option value="">Branş Seçin</option>
+                                <option value="Matematik">Matematik</option>
+                                <option value="Fizik">Fizik</option>
+                                <option value="Kimya">Kimya</option>
+                                <option value="Biyoloji">Biyoloji</option>
+                                <option value="Türkçe">Türkçe</option>
+                                <option value="Edebiyat">Edebiyat</option>
+                                <option value="Tarih">Tarih</option>
+                                <option value="Coğrafya">Coğrafya</option>
+                                <option value="İngilizce">İngilizce</option>
+                                <option value="Beden Eğitimi">Beden Eğitimi</option>
+                                <option value="Müzik">Müzik</option>
+                                <option value="Resim">Resim</option>
+                                <option value="Din Kültürü">Din Kültürü</option>
+                                <option value="Bilişim Teknolojileri">Bilişim Teknolojileri</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Öğretmen No</label>
+                            <input type="text" class="form-control" id="teacherNumber" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">E-posta</label>
+                            <input type="email" class="form-control" id="email" readonly>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="button" class="btn btn-primary" onclick="saveTeacher()">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Öğretmen Düzenleme Modal -->
+    <div class="modal fade" id="editTeacherModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Öğretmen Düzenle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editTeacherForm">
+                        <input type="hidden" id="editTeacherId">
+                        <div class="mb-3">
+                            <label class="form-label">Ad Soyad</label>
+                            <input type="text" class="form-control" id="editName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Branş</label>
+                            <select class="form-select" id="editSubject" required>
+                                <option value="">Branş Seçin</option>
+                                <option value="Matematik">Matematik</option>
+                                <option value="Fizik">Fizik</option>
+                                <option value="Kimya">Kimya</option>
+                                <option value="Biyoloji">Biyoloji</option>
+                                <option value="Türkçe">Türkçe</option>
+                                <option value="Edebiyat">Edebiyat</option>
+                                <option value="Tarih">Tarih</option>
+                                <option value="Coğrafya">Coğrafya</option>
+                                <option value="İngilizce">İngilizce</option>
+                                <option value="Beden Eğitimi">Beden Eğitimi</option>
+                                <option value="Müzik">Müzik</option>
+                                <option value="Resim">Resim</option>
+                                <option value="Din Kültürü">Din Kültürü</option>
+                                <option value="Bilişim Teknolojileri">Bilişim Teknolojileri</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Öğretmen No</label>
+                            <input type="text" class="form-control" id="editTeacherNumber" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">E-posta</label>
+                            <input type="email" class="form-control" id="editEmail" readonly>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="button" class="btn btn-primary" onclick="updateTeacher()">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const addTeacherModal = document.getElementById('addTeacherModal');
+            addTeacherModal.addEventListener('shown.bs.modal', async () => {
+                try {
+                    const response = await fetch('/teachers/api/last-teacher-number');
+                    if (!response.ok) {
+                        throw new Error('Son öğretmen numarası alınırken hata oluştu');
+                    }
+                    const lastTeacherNumber = await response.text();
+                    let nextNumber = 1;
+                    if (lastTeacherNumber && lastTeacherNumber !== 'T000') {
+                        const numericPart = parseInt(lastTeacherNumber.substring(1));
+                        nextNumber = numericPart + 1;
+                    }
+                    const newTeacherNumber = `T${String(nextNumber).padStart(3, '0')}`;
+                    document.getElementById('teacherNumber').value = newTeacherNumber;
+                } catch (error) {
+                    console.error('Öğretmen numarası oluşturulurken hata:', error.message);
+                    alert('Öğretmen numarası oluşturulurken bir hata oluştu: ' + error.message);
+                }
+            });
+
+            const nameInput = document.getElementById('name');
+            nameInput.addEventListener('input', () => {
+                const name = nameInput.value;
+                document.getElementById('email').value = generateEmailFromName(name);
+            });
+
+            const editNameInput = document.getElementById('editName');
+            editNameInput.addEventListener('input', () => {
+                const name = editNameInput.value;
+                document.getElementById('editEmail').value = generateEmailFromName(name);
+            });
+        });
+
+        function generateEmailFromName(name) {
+            if (!name) return '';
+            return name.toLowerCase()
+                .replace(/ğ/g, 'g')
+                .replace(/ü/g, 'u')
+                .replace(/ş/g, 's')
+                .replace(/ı/g, 'i')
+                .replace(/ö/g, 'o')
+                .replace(/ç/g, 'c')
+                .replace(/\s+/g, '.') + '@okul.com';
+        }
+
+        function saveTeacher() {
+            const name = document.getElementById('name').value;
+            const subject = document.getElementById('subject').value;
+            const teacherNumber = document.getElementById('teacherNumber').value;
+            const email = document.getElementById('email').value;
+
+            const teacher = {
+                name: name,
+                subject: subject,
+                teacherNumber: teacherNumber,
+                email: email
+            };
+
+            fetch('/teachers/api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(teacher)
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    return response.text().then(text => {
+                        throw new Error(text || 'Öğretmen eklenirken bir hata oluştu');
+                    });
+                }
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+        }
+
+        function editTeacher(id) {
+            fetch(`/teachers/api/${id}`)
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            try {
+                                const errorJson = JSON.parse(text);
+                                throw new Error(errorJson.message || 'Öğretmen bilgileri alınırken bir hata oluştu');
+                            } catch (e) {
+                                throw new Error(text || 'Öğretmen bilgileri alınırken bir hata oluştu');
+                            }
+                        });
+                    }
+                    return response.json();
+                })
+                .then(teacher => {
+                    if (!teacher) {
+                        throw new Error('Öğretmen bilgileri bulunamadı');
+                    }
+                    document.getElementById('editTeacherId').value = teacher.id;
+                    document.getElementById('editName').value = teacher.name;
+                    document.getElementById('editSubject').value = teacher.subject;
+                    document.getElementById('editTeacherNumber').value = teacher.teacherNumber;
+                    document.getElementById('editEmail').value = teacher.email;
+                    
+                    const editTeacherModal = new bootstrap.Modal(document.getElementById('editTeacherModal'));
+                    editTeacherModal.show();
+                })
+                .catch(error => {
+                    console.error('Hata:', error);
+                    alert(error.message);
+                });
+        }
+
+        function updateTeacher() {
+            const id = document.getElementById('editTeacherId').value;
+            const name = document.getElementById('editName').value;
+            const subject = document.getElementById('editSubject').value;
+            const teacherNumber = document.getElementById('editTeacherNumber').value;
+            const email = document.getElementById('editEmail').value;
+
+            const teacher = {
+                id: id,
+                name: name,
+                subject: subject,
+                teacherNumber: teacherNumber,
+                email: email
+            };
+
+            fetch(`/teachers/api/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(teacher)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        try {
+                            const errorJson = JSON.parse(text);
+                            throw new Error(errorJson.message || 'Öğretmen güncellenirken bir hata oluştu');
+                        } catch (e) {
+                            throw new Error(text || 'Öğretmen güncellenirken bir hata oluştu');
+                        }
+                    });
+                }
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+                alert(error.message);
+            });
+        }
+
+        function deleteTeacher(id) {
+            if (confirm('Bu öğretmeni silmek istediğinizden emin misiniz?')) {
+                fetch(`/teachers/api/${id}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        return response.text().then(text => {
+                            throw new Error(text || 'Öğretmen silinirken bir hata oluştu');
+                        });
+                    }
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+            }
+        }
+    </script>
+</body>
+</html> 

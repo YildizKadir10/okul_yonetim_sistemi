@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.okulyonetimsistemi.okulyonetimsistemi.OkulyonetimsistemiApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.041 s -- in com.okulyonetimsistemi.okulyonetimsistemi.OkulyonetimsistemiApplicationTests
